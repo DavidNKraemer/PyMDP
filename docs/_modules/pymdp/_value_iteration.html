@@ -31,8 +31,13 @@
           <div class="body" role="main">
             
   <h1>Source code for pymdp._value_iteration</h1><div class="highlight"><pre>
-<span></span><span class="c1">## Value Iteration ##</span>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    pymdp._value_iteration</span>
+<span class="sd">    ~~~~~~~~~~~~~~~~~~~~~~</span>
 
+<span class="sd">    Implementation of value iteration for the infinite horizon problem.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">pymdp.bellman</span> <span class="k">import</span> <span class="n">bellman_operator</span>
 <span class="kn">from</span> <span class="nn">pymdp.mdp</span> <span class="k">import</span> <span class="n">MarkovDecisionProcess</span><span class="p">,</span> <span class="n">default_value</span>
 <span class="kn">from</span> <span class="nn">pymdp.utils</span> <span class="k">import</span> <span class="n">sup_distance</span>
@@ -44,12 +49,15 @@
 <span class="sd">    error term epsilon.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">default_value</span><span class="p">(</span><span class="n">mdp</span><span class="p">)</span>
-    <span class="n">policy</span><span class="p">,</span> <span class="n">update</span> <span class="o">=</span> <span class="n">bellman_operator</span><span class="p">(</span><span class="n">mdp</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
     <span class="n">tolerance</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">mdp</span><span class="o">.</span><span class="n">discount</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">mdp</span><span class="o">.</span><span class="n">discount</span><span class="p">)</span> <span class="o">*</span> <span class="n">epsilon</span>
+    <span class="n">proceeding</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">while</span> <span class="n">sup_distance</span><span class="p">(</span><span class="n">mdp</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tolerance</span><span class="p">:</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">update</span>
+    <span class="k">while</span> <span class="n">proceeding</span><span class="p">:</span> 
         <span class="n">policy</span><span class="p">,</span> <span class="n">update</span> <span class="o">=</span> <span class="n">bellman_operator</span><span class="p">(</span><span class="n">mdp</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sup_distance</span><span class="p">(</span><span class="n">mdp</span><span class="o">.</span><span class="n">states</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tolerance</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">update</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">proceeding</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">return</span> <span class="n">policy</span><span class="p">,</span> <span class="n">value</span></div>
 </pre></div>
