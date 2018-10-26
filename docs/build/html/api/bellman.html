@@ -1,0 +1,214 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Bellman operator and related tools &#8212; PyMDP 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Markov Decision Processes" href="mdp.html" />
+    <link rel="prev" title="API Reference" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-pymdp.bellman">
+<span id="bellman-operator-and-related-tools"></span><h1>Bellman operator and related tools<a class="headerlink" href="#module-pymdp.bellman" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pymdp-bellman">
+<h2>pymdp.bellman<a class="headerlink" href="#pymdp-bellman" title="Permalink to this headline">¶</a></h2>
+<p>Bellman operator and related functions for performing value iteration and
+policy iteration.</p>
+<p>Consider a Markov Decision Process with state space <span class="math notranslate nohighlight">\(X\)</span>, action sets
+<span class="math notranslate nohighlight">\(A(x)\)</span>, transition probabilities <span class="math notranslate nohighlight">\(p(y | x, a)\)</span>, reward function
+<span class="math notranslate nohighlight">\(r(x,a)\)</span>, and discount factor <span class="math notranslate nohighlight">\(\beta\)</span>. For a bounded function
+<span class="math notranslate nohighlight">\(f : X \to \mathbb{R}\)</span>, the <em>Bellman operator</em> of <span class="math notranslate nohighlight">\(f\)</span> is defined
+as</p>
+<div class="math notranslate nohighlight">
+\[T_\beta f(x) = \max_{a \in A(x)}\sum_{y \in X} [r(y,a) + \beta f(y)] \cdot p(y|x,a).\]</div>
+<p>The Bellman operator is an essential component in value and policy
+iteration, both as a theoretical instrument and as a practical one.</p>
+<dl class="function">
+<dt id="pymdp.bellman.bellman_difference">
+<code class="descclassname">pymdp.bellman.</code><code class="descname">bellman_difference</code><span class="sig-paren">(</span><em>mdp</em>, <em>value</em>, <em>state</em>, <em>action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/bellman.html#bellman_difference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.bellman.bellman_difference" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mdp</strong> (<a class="reference internal" href="mdp.html#pymdp.mdp.MarkovDecisionProcess" title="pymdp.mdp.MarkovDecisionProcess"><em>MarkovDecisionProcess</em></a>) – A given Markov decision process object</li>
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – A value function on the state space of <cite>mdp</cite></li>
+<li><strong>state</strong> – A state in the state space of <cite>mdp</cite></li>
+<li><strong>action</strong> – An action in the action space of <cite>state</cite> in <cite>mdp</cite></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The numerical result <span class="math notranslate nohighlight">\(T^a_\beta v(x) - v(x)\)</span>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Computes the function</p>
+<div class="math notranslate nohighlight">
+\[s_{x,a}(\pi) = T^a v^{\pi}(x) - v^{\pi}(x)\]</div>
+<p>where <span class="math notranslate nohighlight">\(v^{\pi}\)</span> is the value function associated with the policy
+<span class="math notranslate nohighlight">\(\pi\)</span>. The function <span class="math notranslate nohighlight">\(s_{x,a}(\pi)\)</span> is needed specifically for
+policy iteration.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymdp.bellman.bellman_operator">
+<code class="descclassname">pymdp.bellman.</code><code class="descname">bellman_operator</code><span class="sig-paren">(</span><em>mdp</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/bellman.html#bellman_operator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.bellman.bellman_operator" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mdp</strong> (<a class="reference internal" href="mdp.html#pymdp.mdp.MarkovDecisionProcess" title="pymdp.mdp.MarkovDecisionProcess"><em>MarkovDecisionProcess</em></a>) – A given Markov decision process object</li>
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – A value function on the state space of <cite>mdp</cite></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The value function and corresponding policy for the Bellman operator <span class="math notranslate nohighlight">\(T_\beta v(x)\)</span>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a>,<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Computes the Bellman operator</p>
+<div class="math notranslate nohighlight">
+\[T_\beta v(x) = \max_{a \in A(x)} T^a_\beta v(x)\]</div>
+<p>for a specified function <span class="math notranslate nohighlight">\(v\)</span>, and returns a policy which achieves the
+value function <span class="math notranslate nohighlight">\(T_\beta v\)</span>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymdp.bellman.bellman_step">
+<code class="descclassname">pymdp.bellman.</code><code class="descname">bellman_step</code><span class="sig-paren">(</span><em>mdp</em>, <em>value</em>, <em>state</em>, <em>action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/bellman.html#bellman_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.bellman.bellman_step" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mdp</strong> (<a class="reference internal" href="mdp.html#pymdp.mdp.MarkovDecisionProcess" title="pymdp.mdp.MarkovDecisionProcess"><em>MarkovDecisionProcess</em></a>) – A given Markov decision process object</li>
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – A value function on the state space of <cite>mdp</cite></li>
+<li><strong>state</strong> – A state in the state space of <cite>mdp</cite></li>
+<li><strong>action</strong> – An action in the action space of <cite>state</cite> in <cite>mdp</cite></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The numerical result <span class="math notranslate nohighlight">\(T^a_\beta v(x)\)</span>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Computes, for a state <span class="math notranslate nohighlight">\(x\)</span>, action <span class="math notranslate nohighlight">\(a\)</span>, and given value function
+<span class="math notranslate nohighlight">\(v\)</span>, the operator</p>
+<div class="math notranslate nohighlight">
+\[\sum_{y \in X} [r(y,a) + \beta f(y)] \cdot p(y|x,a).\]</div>
+<p>If we denote this operator by <span class="math notranslate nohighlight">\(T_\beta^a\)</span>, then it relates to the
+Bellman operator by</p>
+<div class="math notranslate nohighlight">
+\[T_\beta v(x) = \max_{a \in A(x)} T^a_\beta v(x)\]</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PyMDP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Bellman operator and related tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdp.html">Markov Decision Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solvers.html">MDP solver algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Utilities</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">API Reference</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">API Reference</a></li>
+      <li>Next: <a href="mdp.html" title="next chapter">Markov Decision Processes</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, David Kraemer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/api/bellman.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

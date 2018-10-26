@@ -1,0 +1,163 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Markov Decision Processes &#8212; PyMDP 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="MDP solver algorithms" href="solvers.html" />
+    <link rel="prev" title="Bellman operator and related tools" href="bellman.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-pymdp.mdp">
+<span id="markov-decision-processes"></span><h1>Markov Decision Processes<a class="headerlink" href="#module-pymdp.mdp" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pymdp.mdp.MarkovDecisionProcess">
+<em class="property">class </em><code class="descclassname">pymdp.mdp.</code><code class="descname">MarkovDecisionProcess</code><span class="sig-paren">(</span><em>states</em>, <em>actions</em>, <em>reward</em>, <em>transition</em>, <em>discount</em><span class="sig-paren">)</span><a class="headerlink" href="#pymdp.mdp.MarkovDecisionProcess" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pymdp.mdp.MarkovDecisionProcess.actions">
+<code class="descname">actions</code><a class="headerlink" href="#pymdp.mdp.MarkovDecisionProcess.actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pymdp.mdp.MarkovDecisionProcess.discount">
+<code class="descname">discount</code><a class="headerlink" href="#pymdp.mdp.MarkovDecisionProcess.discount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pymdp.mdp.MarkovDecisionProcess.reward">
+<code class="descname">reward</code><a class="headerlink" href="#pymdp.mdp.MarkovDecisionProcess.reward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pymdp.mdp.MarkovDecisionProcess.states">
+<code class="descname">states</code><a class="headerlink" href="#pymdp.mdp.MarkovDecisionProcess.states" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pymdp.mdp.MarkovDecisionProcess.transition">
+<code class="descname">transition</code><a class="headerlink" href="#pymdp.mdp.MarkovDecisionProcess.transition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pymdp.mdp.default_policy">
+<code class="descclassname">pymdp.mdp.</code><code class="descname">default_policy</code><span class="sig-paren">(</span><em>mdp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/mdp.html#default_policy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.mdp.default_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an arbitrary policy, which assigns to each state some available
+action.</p>
+<p>Policy functions will be implemented as dictionaries. So if x is a state of
+the MDP, then policy[x] yields the action associated with the stationary
+policy for x.</p>
+<p>Note that the default policy requires there to be an available action at
+every state.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymdp.mdp.default_value">
+<code class="descclassname">pymdp.mdp.</code><code class="descname">default_value</code><span class="sig-paren">(</span><em>mdp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/mdp.html#default_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.mdp.default_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the “zero” value function, which assigns to each state the value 0.0</p>
+<p>Value functions will be implemented as dictionaries. So if x is a state of
+the MDP, then value[x] yields the value function at x.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PyMDP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="bellman.html">Bellman operator and related tools</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Markov Decision Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solvers.html">MDP solver algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Utilities</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">API Reference</a><ul>
+      <li>Previous: <a href="bellman.html" title="previous chapter">Bellman operator and related tools</a></li>
+      <li>Next: <a href="solvers.html" title="next chapter">MDP solver algorithms</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, David Kraemer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/api/mdp.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

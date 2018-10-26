@@ -1,0 +1,171 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>MDP solver algorithms &#8212; PyMDP 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Utilities" href="utils.html" />
+    <link rel="prev" title="Markov Decision Processes" href="mdp.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-pymdp._value_iteration">
+<span id="mdp-solver-algorithms"></span><h1>MDP solver algorithms<a class="headerlink" href="#module-pymdp._value_iteration" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="pymdp._value_iteration.value_iteration">
+<code class="descclassname">pymdp._value_iteration.</code><code class="descname">value_iteration</code><span class="sig-paren">(</span><em>mdp: pymdp.mdp.MarkovDecisionProcess</em>, <em>epsilon</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_value_iteration.html#value_iteration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._value_iteration.value_iteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs infinite horizon value iteration for a given MDP with a numerical
+error term epsilon.</p>
+</dd></dl>
+
+<span class="target" id="module-pymdp._policy_iteration"></span><dl class="function">
+<dt id="pymdp._policy_iteration.can_improve">
+<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">can_improve</code><span class="sig-paren">(</span><em>improvements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#can_improve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.can_improve" title="Permalink to this definition">¶</a></dt>
+<dd><p>A boolean check on whether any improvement is actually possible from the
+present policy.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymdp._policy_iteration.determine_improvements">
+<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">determine_improvements</code><span class="sig-paren">(</span><em>mdp</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#determine_improvements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.determine_improvements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes, for each state, the set of all associated actions for which the
+value function would increase if the policy were to adopt them.</p>
+<p>The state gets skipped if no improvements can be made in it. Thus the
+returned improvements are only those which <em>strictly</em> improve the policy’s
+associated value function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymdp._policy_iteration.improve_policy">
+<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">improve_policy</code><span class="sig-paren">(</span><em>mdp</em>, <em>policy</em>, <em>value</em>, <em>improvements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#improve_policy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.improve_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a policy, value function, and set of state-action combinations that
+can modify the policy so that the value function increases strictly, do just
+that.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymdp._policy_iteration.policy_iteration">
+<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">policy_iteration</code><span class="sig-paren">(</span><em>mdp: pymdp.mdp.MarkovDecisionProcess</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#policy_iteration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.policy_iteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs policy iteration on a given infinite horizon MDP.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymdp._policy_iteration.policy_reward">
+<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">policy_reward</code><span class="sig-paren">(</span><em>mdp</em>, <em>policy</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#policy_reward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.policy_reward" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each $x in X$
+$$ r(phi)_x = sum_{y in X} P(y mid x, phi(x)) r(y, phi(x)) $$</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymdp._policy_iteration.policy_transition">
+<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">policy_transition</code><span class="sig-paren">(</span><em>mdp</em>, <em>policy</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#policy_transition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.policy_transition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the transition matrix corresponding to a particular policy
+function, so that the (i,j)th entry in the matrix corresponds to the
+probability of arriving at state i from state j through policy[j].</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymdp._policy_iteration.solve_for_value">
+<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">solve_for_value</code><span class="sig-paren">(</span><em>mdp</em>, <em>policy</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#solve_for_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.solve_for_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves the system
+$$
+(I - eta P(policy)) v = r(policy)
+$$
+for the value function v.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PyMDP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="bellman.html">Bellman operator and related tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdp.html">Markov Decision Processes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MDP solver algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Utilities</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">API Reference</a><ul>
+      <li>Previous: <a href="mdp.html" title="previous chapter">Markov Decision Processes</a></li>
+      <li>Next: <a href="utils.html" title="next chapter">Utilities</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, David Kraemer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/api/solvers.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,172 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Utilities &#8212; PyMDP 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="MDP solver algorithms" href="solvers.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-pymdp.utils">
+<span id="utilities"></span><h1>Utilities<a class="headerlink" href="#module-pymdp.utils" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pymdp-utils">
+<h2>pymdp.utils<a class="headerlink" href="#pymdp-utils" title="Permalink to this headline">¶</a></h2>
+<p>Functions which have uses throughout the library. In particular, the sup
+norm <span class="math notranslate nohighlight">\(\|f\|_{\infty} = \sup_{x \in X} |f(x)|\)</span> for bounded functions
+<span class="math notranslate nohighlight">\(f : X \to \mathbb{R}\)</span> on finite spaces.</p>
+<dl class="function">
+<dt id="pymdp.utils.sup_distance">
+<code class="descclassname">pymdp.utils.</code><code class="descname">sup_distance</code><span class="sig-paren">(</span><em>space</em>, <em>fun1</em>, <em>fun2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/utils.html#sup_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.utils.sup_distance" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>space</strong> (<em>container class</em>) – A collection of points.</li>
+<li><strong>fun1</strong> (<cite>space</cite> -&gt; float) – A function defined on space.</li>
+<li><strong>fun2</strong> (<cite>space</cite> -&gt; float) – A function defined on space.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Return distance:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><p class="first">the value of the supremum distance</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Given two functions f,g which operate on the state space of a given MDP,
+computes</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\|f-g\| &amp;= \sup_{x \in X} |f(x) - g(x)| \\
+&amp;= \max_{x \in X} |f(x) - g(x)|\end{split}\]</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymdp.utils.sup_norm">
+<code class="descclassname">pymdp.utils.</code><code class="descname">sup_norm</code><span class="sig-paren">(</span><em>space</em>, <em>fun</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/utils.html#sup_norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.utils.sup_norm" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>space</strong> (<em>container class</em>) – A collection of points.</li>
+<li><strong>fun</strong> (<cite>space</cite> -&gt; float) – A function defined on space.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return norm:</th><td class="field-body"><p class="first">the value of the supremum norm.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Computes the supremum norm of the function <span class="math notranslate nohighlight">\(f : X \to \mathbb{R}\)</span>
+defined by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\| f \|_{\infty} &amp;= \sup_{x \in X} | f(x) | \\
+&amp;= \max_{x \in X} | f(x) |\end{split}\]</div>
+<p>Since <span class="math notranslate nohighlight">\(X\)</span> is assumed finite, the supremum can be replaced with a
+maximum.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PyMDP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="bellman.html">Bellman operator and related tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdp.html">Markov Decision Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solvers.html">MDP solver algorithms</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Utilities</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">API Reference</a><ul>
+      <li>Previous: <a href="solvers.html" title="previous chapter">MDP solver algorithms</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, David Kraemer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/api/utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
