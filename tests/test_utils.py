@@ -7,6 +7,9 @@ Tests of the functions defined in pymdp.utils
 from pymdp import utils
 
 
+import codecov
+
+
 def test_sup_norm():
     """
     Tests for the function utils.sup_norm
