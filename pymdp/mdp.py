@@ -5,6 +5,14 @@ MarkovDecisionProcess = namedtuple(
     ["states", "actions", "reward", "transition", "discount"]
     )
 
+class MDPFunction(dict):
+    def __init__(self, dictionary):
+        super.__init__(dictionary)
+
+    def __call__(self, key):
+        return self.__getitem__(key)
+
+
 def default_value(mdp):
     """
     Returns the "zero" value function, which assigns to each state the value 0.0
@@ -12,7 +20,7 @@ def default_value(mdp):
     Value functions will be implemented as dictionaries. So if x is a state of
     the MDP, then value[x] yields the value function at x.
     """
-    return {x: 0. for x in mdp.states}
+    return MDPFunction({x: 0. for x in mdp.states})
 
 
 def default_policy(mdp):
@@ -27,6 +35,6 @@ def default_policy(mdp):
     Note that the default policy requires there to be an available action at
     every state.
     """
-    return {x: mdp.actions[x][0] for x in mdp.states}
+    return MDPFunction({x: mdp.actions[x][0] for x in mdp.states})
 
 

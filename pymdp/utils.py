@@ -53,4 +53,4 @@ def sup_distance(space, fun1, fun2):
     .. math:: \|f-g\| &= \sup_{x \in X} |f(x) - g(x)| \\
                       &= \max_{x \in X} |f(x) - g(x)|
     """
-    return sup_norm(space, lambda x: fun1[x] - fun2[x])
+    return sup_norm(space, lambda x: fun1(x) - fun2(x))
