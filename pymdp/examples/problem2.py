@@ -1,4 +1,7 @@
-from mdp_solver import MarkovDecisionProcess, value_iteration
+from pymdp.mdp import MarkovDecisionProcess
+from pymdp.solvers import value_iteration
+from pymdp.solvers import linear_programming
+from pymdp.solvers import policy_iteration 
 
 states = [1, 2, 3, 4, 5]
 actions = {
@@ -40,4 +43,8 @@ def reward(y, a):
 machine_operator = MarkovDecisionProcess(states, actions, reward, transition,
         discount=0.9)
 
-print(value_iteration(machine_operator, 1e-3))
+#print(value_iteration(machine_operator, 1e-3))
+lp_solution = linear_programming(machine_operator)
+for state in states:
+    print(' & '.join(map(str,[state, lp_solution[state]])))
+#print(policy_iteration(machine_operator))

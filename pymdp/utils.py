@@ -10,7 +10,7 @@ r"""
 
 
 def _compose(outer, inner):
-    return lambda x: outer(inner(x))
+    return lambda x: outer(inner[x])
 
 
 def sup_norm(space, fun):
@@ -32,7 +32,7 @@ def sup_norm(space, fun):
     Since :math:`X` is assumed finite, the supremum can be replaced with a
     maximum.
     """
-    return max(map(_compose(abs, fun), space))
+    return max(abs(fun(state)) for state in space)
 
 
 def sup_distance(space, fun1, fun2):
@@ -53,4 +53,4 @@ def sup_distance(space, fun1, fun2):
     .. math:: \|f-g\| &= \sup_{x \in X} |f(x) - g(x)| \\
                       &= \max_{x \in X} |f(x) - g(x)|
     """
-    return sup_norm(space, lambda x: fun1(x) - fun2(x))
+    return sup_norm(space, lambda x: fun1[x] - fun2[x])

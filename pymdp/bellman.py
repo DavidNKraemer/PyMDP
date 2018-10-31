@@ -99,3 +99,16 @@ def bellman_difference(mdp, value, state, action):
     policy iteration.
     """
     return bellman_step(mdp, value, state, action) - value[state]
+
+
+def generate_policy_from(mdp, value):
+    r"""
+    Creates a policy corresponding to the given value function.
+    """
+    return {state:
+            next(
+                filter(
+                    lambda a: bellman_step(mdp, value, state, a) == value[state],
+                    mdp.actions[state]
+                    )
+                ) for state in mdp.states}

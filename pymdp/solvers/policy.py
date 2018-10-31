@@ -6,6 +6,10 @@ from pymdp.mdp import MarkovDecisionProcess, default_value, default_policy
 from pymdp.bellman import bellman_difference
 
 
+def argmax(iterable):
+    return max(enumerate(iterable), key=lambda pair: pair[1])
+
+
 def policy_iteration(mdp: MarkovDecisionProcess):
     """
     Performs policy iteration on a given infinite horizon MDP.
@@ -15,14 +19,12 @@ def policy_iteration(mdp: MarkovDecisionProcess):
 
     improvements = determine_improvements(mdp, value)
 
-    while can_improve(improvements):
-        #print(policy)
-        #print(value)
+    while len(improvements) > 0:
+        print(improvements)
         policy = improve_policy(mdp, policy, value, improvements)
         value = solve_for_value(mdp, policy)
         improvements = determine_improvements(mdp, value)
 
-    #print(value)
     return policy
 
 
@@ -41,7 +43,7 @@ def policy_transition(mdp, policy):
 
 
 def policy_reward(mdp, policy):
-    """
+    r"""
     For each $x \in X$
     $$ r(\phi)_x = \sum_{y \in X} P(y \mid x, \phi(x)) r(y, \phi(x)) $$
     """
@@ -76,6 +78,7 @@ def determine_improvements(mdp, value):
     returned improvements are only those which *strictly* improve the policy's
     associated value function.
     """
+    print(bellman_difference(mdp, value, mdp.states[0], mdp.actions[mdp.states[0]][0]))
     improvements = {x: [a for a in mdp.actions[x] \
         if bellman_difference(mdp, value, x, a) > 0.] for x in mdp.states}
     return {x: improvements[x] for x in improvements if len(improvements[x]) > 0}
