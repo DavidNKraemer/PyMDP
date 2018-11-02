@@ -19,7 +19,7 @@ r"""
 """
 
 
-from pymdp.mdp import default_value, default_policy
+from pymdp.mdp import default_value, default_policy, MDPFunction
 
 
 def bellman_step(mdp, value, state, action):
@@ -45,7 +45,7 @@ def bellman_step(mdp, value, state, action):
     .. math:: T_\beta v(x) = \max_{a \in A(x)} T^a_\beta v(x)
     """
     return sum(
-        (mdp.reward(y, action) + mdp.discount * value[y]) * mdp.transition(y, state, action) \
+        (mdp.reward(y, action) + mdp.discount * value(y)) * mdp.transition(y, state, action) \
                     for y in mdp.states
         )
 
@@ -71,6 +71,7 @@ def bellman_operator(mdp, value):
     policy = default_policy(mdp)
 
     for state in mdp.states:
+        print([(a, bellman_step(mdp, value, state, a)) for a in mdp.actions[state]])
         policy[state], update[state] = max(
             [(a, bellman_step(mdp, value, state, a)) for a in mdp.actions[state]],
             key=lambda pair: pair[1])
@@ -98,17 +99,17 @@ def bellman_difference(mdp, value, state, action):
     :math:`\pi`. The function :math:`s_{x,a}(\pi)` is needed specifically for
     policy iteration.
     """
-    return bellman_step(mdp, value, state, action) - value[state]
+    return bellman_step(mdp, value, state, action) - value(state)
 
 
 def generate_policy_from(mdp, value):
     r"""
     Creates a policy corresponding to the given value function.
     """
-    return {state:
+    return MDPFunction({state:
             next(
                 filter(
-                    lambda a: bellman_step(mdp, value, state, a) == value[state],
+                    lambda a: bellman_step(mdp, value, state, a) == value(state),
                     mdp.actions[state]
                     )
-                ) for state in mdp.states}
+                ) for state in mdp.states})
