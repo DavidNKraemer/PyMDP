@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 r"""
-    pymdp._linear_programming
+    pymdp.solvers.linear_programming
     ~~~~~~~~~~~~~~~~~~~~~~~~~
 
     Implementation of linear programming solution to the infinite horizon

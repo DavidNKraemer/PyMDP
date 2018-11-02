@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 r"""
-    pymdp._value_iteration
-    ~~~~~~~~~~~~~~~~~~~~~~
+    pymdp.solvers.value
+    ~~~~~~~~~~~~~~~~~~~
 
     Implementation of value iteration for the infinite horizon problem.
 """

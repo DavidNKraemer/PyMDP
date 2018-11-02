@@ -1,4 +1,11 @@
 ## Policy Iteration ##
+r"""
+    pymdp.solvers.policy
+    ~~~~~~~~~~~~~~~~~~~~
+
+    Implementation of policy iteration for the infinite horizon problem.
+"""
+
 from numpy import eye, array
 from numpy.linalg import solve
 
