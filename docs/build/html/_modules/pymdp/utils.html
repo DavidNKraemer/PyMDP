@@ -43,7 +43,7 @@
 
 
 <span class="k">def</span> <span class="nf">_compose</span><span class="p">(</span><span class="n">outer</span><span class="p">,</span> <span class="n">inner</span><span class="p">):</span>
-    <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">outer</span><span class="p">(</span><span class="n">inner</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">outer</span><span class="p">(</span><span class="n">inner</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
 
 
 <div class="viewcode-block" id="sup_norm"><a class="viewcode-back" href="../../api/utils.html#pymdp.utils.sup_norm">[docs]</a><span class="k">def</span> <span class="nf">sup_norm</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">fun</span><span class="p">):</span>
@@ -65,7 +65,7 @@
 <span class="sd">    Since :math:`X` is assumed finite, the supremum can be replaced with a</span>
 <span class="sd">    maximum.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">_compose</span><span class="p">(</span><span class="nb">abs</span><span class="p">,</span> <span class="n">fun</span><span class="p">),</span> <span class="n">space</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fun</span><span class="p">(</span><span class="n">state</span><span class="p">))</span> <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">space</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="sup_distance"><a class="viewcode-back" href="../../api/utils.html#pymdp.utils.sup_distance">[docs]</a><span class="k">def</span> <span class="nf">sup_distance</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">fun1</span><span class="p">,</span> <span class="n">fun2</span><span class="p">):</span>

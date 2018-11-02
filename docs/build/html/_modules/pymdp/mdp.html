@@ -31,38 +31,98 @@
           <div class="body" role="main">
             
   <h1>Source code for pymdp.mdp</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    pymdp.mdp</span>
+<span class="sd">    ~~~~~~~~~</span>
 
-<span class="n">MarkovDecisionProcess</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span>
+<span class="sd">    Python representation of a Markov decision process, along with functions</span>
+<span class="sd">    acting on the state space of an MDP.</span>
+
+<span class="sd">    A *Markov decision process* (MDP) is formally a tuple</span>
+
+<span class="sd">    .. math:: (X, A, r, p, \beta)</span>
+
+<span class="sd">    where</span>
+
+<span class="sd">    * :math:`X` is the *state space* of the MDP, usually a point set,</span>
+<span class="sd">    * :math:`A(x)` is, for each state :math:`x \in X`, the *action set* of available actions at :math:`x`,</span>
+<span class="sd">    * :math:`r(x,a)` is, for each state :math:`x \in X` and :math:`a \in A(x)`, the numerical *one-step reward function* at :math:`x` with action :math:`a`,</span>
+<span class="sd">    * :math:`p(y|x,a)` is, for states :math:`x,y \in X` and :math:`a \in A(x)`, the *transition probability* of the process arriving at the state :math:`y` from the original state :math:`x` by the action :math:`a`,</span>
+<span class="sd">    * :math:`\beta` is a number between :math:`0` and :math:`1` indicating the *discount factor*.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">NamedTuple</span>
+
+
+<div class="viewcode-block" id="MDPFunction"><a class="viewcode-back" href="../../api/mdp.html#pymdp.mdp.MDPFunction">[docs]</a><span class="k">class</span> <span class="nc">MDPFunction</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Standardized user-facing object for representing functions on the state</span>
+<span class="sd">    space of an MDP.</span>
+
+<span class="sd">    Essentially, an `MDPFunction` is a `dict` whose items can be accessed via</span>
+<span class="sd">    function calls. This is because many &quot;functions&quot; implemented throughout this</span>
+<span class="sd">    library are actually `dict` objects *masquerading* as functions. Since they</span>
+<span class="sd">    should be thought of as functions, this class provides the requisite</span>
+<span class="sd">    interface to do so.</span>
+
+<span class="sd">    We promise that any MDPFunction can access its values via `__call__`, but</span>
+<span class="sd">    the internal implementation may evolve over time.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param key: The value on which the function is to be evaluated.</span>
+
+<span class="sd">        :return: The corresponding result of self[key]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+
+<span class="n">MarkovDecisionProcess</span> <span class="o">=</span> <span class="n">NamedTuple</span><span class="p">(</span>
     <span class="s2">&quot;MarkovDecisionProcess&quot;</span><span class="p">,</span>
-    <span class="p">[</span><span class="s2">&quot;states&quot;</span><span class="p">,</span> <span class="s2">&quot;actions&quot;</span><span class="p">,</span> <span class="s2">&quot;reward&quot;</span><span class="p">,</span> <span class="s2">&quot;transition&quot;</span><span class="p">,</span> <span class="s2">&quot;discount&quot;</span><span class="p">]</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;states&quot;</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;actions&quot;</span><span class="p">,</span> <span class="n">MDPFunction</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;reward&quot;</span><span class="p">,</span> <span class="n">Callable</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;transition&quot;</span><span class="p">,</span> <span class="n">Callable</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;discount&quot;</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+        <span class="p">]</span>
     <span class="p">)</span>
 
-<div class="viewcode-block" id="default_value"><a class="viewcode-back" href="../../api/mdp.html#pymdp.mdp.default_value">[docs]</a><span class="k">def</span> <span class="nf">default_value</span><span class="p">(</span><span class="n">mdp</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns the &quot;zero&quot; value function, which assigns to each state the value 0.0</span>
 
-<span class="sd">    Value functions will be implemented as dictionaries. So if x is a state of</span>
-<span class="sd">    the MDP, then value[x] yields the value function at x.</span>
+<div class="viewcode-block" id="default_value"><a class="viewcode-back" href="../../api/mdp.html#pymdp.mdp.default_value">[docs]</a><span class="k">def</span> <span class="nf">default_value</span><span class="p">(</span><span class="n">mdp</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :param mdp: A given Markov decision process object</span>
+<span class="sd">    :type mdp: MarkovDecisionProcess</span>
+
+<span class="sd">    :param default: The default output of the value function at each point in the state space.</span>
+<span class="sd">    :type default: float</span>
+
+<span class="sd">    :return: The constant value function :math:`v : X \to \mathbb{R}` with the given `v(x) = c`, where :math:`c` was supplied by `default`.</span>
+<span class="sd">    :rtype: MDPFunction</span>
+
+<span class="sd">    Returns the &quot;default&quot; value function, which assigns to each state the value `default` (if unset, this defaults to 0.).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="mf">0.</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">mdp</span><span class="o">.</span><span class="n">states</span><span class="p">}</span></div>
+    <span class="k">return</span> <span class="n">MDPFunction</span><span class="p">({</span><span class="n">x</span><span class="p">:</span> <span class="n">default</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">mdp</span><span class="o">.</span><span class="n">states</span><span class="p">})</span></div>
 
 
-<div class="viewcode-block" id="default_policy"><a class="viewcode-back" href="../../api/mdp.html#pymdp.mdp.default_policy">[docs]</a><span class="k">def</span> <span class="nf">default_policy</span><span class="p">(</span><span class="n">mdp</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="default_policy"><a class="viewcode-back" href="../../api/mdp.html#pymdp.mdp.default_policy">[docs]</a><span class="k">def</span> <span class="nf">default_policy</span><span class="p">(</span><span class="n">mdp</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :param mdp: A given Markov decision process object</span>
+<span class="sd">    :type mdp: MarkovDecisionProcess</span>
+<span class="sd">    :param default: The index of the default action for each state in the MDP (defaults to 0)</span>
+<span class="sd">    :type default: int</span>
+
+<span class="sd">    :return: The policy defined by :math:`\pi(x) = A(x)_i` where `i` is the default index supplied.</span>
+<span class="sd">    :rtype: MDPFunction</span>
+
 <span class="sd">    Returns an arbitrary policy, which assigns to each state some available</span>
 <span class="sd">    action.</span>
 
-<span class="sd">    Policy functions will be implemented as dictionaries. So if x is a state of</span>
-<span class="sd">    the MDP, then policy[x] yields the action associated with the stationary</span>
-<span class="sd">    policy for x.</span>
-
 <span class="sd">    Note that the default policy requires there to be an available action at</span>
-<span class="sd">    every state.</span>
+<span class="sd">    every state. (TODO: generalize this)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">mdp</span><span class="o">.</span><span class="n">actions</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">mdp</span><span class="o">.</span><span class="n">states</span><span class="p">}</span></div>
-
-
+    <span class="k">return</span> <span class="n">MDPFunction</span><span class="p">({</span><span class="n">x</span><span class="p">:</span> <span class="n">mdp</span><span class="o">.</span><span class="n">actions</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">default</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">mdp</span><span class="o">.</span><span class="n">states</span><span class="p">})</span></div>
 </pre></div>
 
           </div>

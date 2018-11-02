@@ -1,8 +1,12 @@
 MDP solver algorithms
 ==================================
 
-.. automodule:: pymdp._value_iteration
+.. automodule:: pymdp.solvers.value
   :members:
 
-.. automodule:: pymdp._policy_iteration
+.. automodule:: pymdp.solvers.policy
+  :members:
+
+
+.. automodule:: pymdp.solvers.linear
   :members:

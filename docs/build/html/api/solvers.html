@@ -32,29 +32,32 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-pymdp._value_iteration">
-<span id="mdp-solver-algorithms"></span><h1>MDP solver algorithms<a class="headerlink" href="#module-pymdp._value_iteration" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="pymdp-value-iteration">
-<h2>pymdp._value_iteration<a class="headerlink" href="#pymdp-value-iteration" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="module-pymdp.solvers.value">
+<span id="mdp-solver-algorithms"></span><h1>MDP solver algorithms<a class="headerlink" href="#module-pymdp.solvers.value" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pymdp-solvers-value">
+<h2>pymdp.solvers.value<a class="headerlink" href="#pymdp-solvers-value" title="Permalink to this headline">¶</a></h2>
 <p>Implementation of value iteration for the infinite horizon problem.</p>
 <dl class="function">
-<dt id="pymdp._value_iteration.value_iteration">
-<code class="descclassname">pymdp._value_iteration.</code><code class="descname">value_iteration</code><span class="sig-paren">(</span><em>mdp: pymdp.mdp.MarkovDecisionProcess</em>, <em>epsilon</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_value_iteration.html#value_iteration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._value_iteration.value_iteration" title="Permalink to this definition">¶</a></dt>
+<dt id="pymdp.solvers.value.value_iteration">
+<code class="descclassname">pymdp.solvers.value.</code><code class="descname">value_iteration</code><span class="sig-paren">(</span><em>mdp: pymdp.mdp.MarkovDecisionProcess</em>, <em>epsilon</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/solvers/value.html#value_iteration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.solvers.value.value_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs infinite horizon value iteration for a given MDP with a numerical
 error term epsilon.</p>
 </dd></dl>
 
 </div>
-<span class="target" id="module-pymdp._policy_iteration"></span><dl class="function">
-<dt id="pymdp._policy_iteration.can_improve">
-<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">can_improve</code><span class="sig-paren">(</span><em>improvements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#can_improve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.can_improve" title="Permalink to this definition">¶</a></dt>
+<span class="target" id="module-pymdp.solvers.policy"></span><div class="section" id="pymdp-solvers-policy">
+<h2>pymdp.solvers.policy<a class="headerlink" href="#pymdp-solvers-policy" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of policy iteration for the infinite horizon problem.</p>
+<dl class="function">
+<dt id="pymdp.solvers.policy.can_improve">
+<code class="descclassname">pymdp.solvers.policy.</code><code class="descname">can_improve</code><span class="sig-paren">(</span><em>improvements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/solvers/policy.html#can_improve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.solvers.policy.can_improve" title="Permalink to this definition">¶</a></dt>
 <dd><p>A boolean check on whether any improvement is actually possible from the
 present policy.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pymdp._policy_iteration.determine_improvements">
-<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">determine_improvements</code><span class="sig-paren">(</span><em>mdp</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#determine_improvements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.determine_improvements" title="Permalink to this definition">¶</a></dt>
+<dt id="pymdp.solvers.policy.determine_improvements">
+<code class="descclassname">pymdp.solvers.policy.</code><code class="descname">determine_improvements</code><span class="sig-paren">(</span><em>mdp</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/solvers/policy.html#determine_improvements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.solvers.policy.determine_improvements" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes, for each state, the set of all associated actions for which the
 value function would increase if the policy were to adopt them.</p>
 <p>The state gets skipped if no improvements can be made in it. Thus the
@@ -63,37 +66,37 @@ associated value function.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pymdp._policy_iteration.improve_policy">
-<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">improve_policy</code><span class="sig-paren">(</span><em>mdp</em>, <em>policy</em>, <em>value</em>, <em>improvements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#improve_policy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.improve_policy" title="Permalink to this definition">¶</a></dt>
+<dt id="pymdp.solvers.policy.improve_policy">
+<code class="descclassname">pymdp.solvers.policy.</code><code class="descname">improve_policy</code><span class="sig-paren">(</span><em>mdp</em>, <em>policy</em>, <em>value</em>, <em>improvements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/solvers/policy.html#improve_policy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.solvers.policy.improve_policy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a policy, value function, and set of state-action combinations that
 can modify the policy so that the value function increases strictly, do just
 that.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pymdp._policy_iteration.policy_iteration">
-<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">policy_iteration</code><span class="sig-paren">(</span><em>mdp: pymdp.mdp.MarkovDecisionProcess</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#policy_iteration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.policy_iteration" title="Permalink to this definition">¶</a></dt>
+<dt id="pymdp.solvers.policy.policy_iteration">
+<code class="descclassname">pymdp.solvers.policy.</code><code class="descname">policy_iteration</code><span class="sig-paren">(</span><em>mdp: pymdp.mdp.MarkovDecisionProcess</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/solvers/policy.html#policy_iteration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.solvers.policy.policy_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs policy iteration on a given infinite horizon MDP.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pymdp._policy_iteration.policy_reward">
-<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">policy_reward</code><span class="sig-paren">(</span><em>mdp</em>, <em>policy</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#policy_reward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.policy_reward" title="Permalink to this definition">¶</a></dt>
+<dt id="pymdp.solvers.policy.policy_reward">
+<code class="descclassname">pymdp.solvers.policy.</code><code class="descname">policy_reward</code><span class="sig-paren">(</span><em>mdp</em>, <em>policy</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/solvers/policy.html#policy_reward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.solvers.policy.policy_reward" title="Permalink to this definition">¶</a></dt>
 <dd><p>For each $x in X$
 $$ r(phi)_x = sum_{y in X} P(y mid x, phi(x)) r(y, phi(x)) $$</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pymdp._policy_iteration.policy_transition">
-<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">policy_transition</code><span class="sig-paren">(</span><em>mdp</em>, <em>policy</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#policy_transition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.policy_transition" title="Permalink to this definition">¶</a></dt>
+<dt id="pymdp.solvers.policy.policy_transition">
+<code class="descclassname">pymdp.solvers.policy.</code><code class="descname">policy_transition</code><span class="sig-paren">(</span><em>mdp</em>, <em>policy</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/solvers/policy.html#policy_transition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.solvers.policy.policy_transition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the transition matrix corresponding to a particular policy
 function, so that the (i,j)th entry in the matrix corresponds to the
 probability of arriving at state i from state j through policy[j].</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pymdp._policy_iteration.solve_for_value">
-<code class="descclassname">pymdp._policy_iteration.</code><code class="descname">solve_for_value</code><span class="sig-paren">(</span><em>mdp</em>, <em>policy</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/_policy_iteration.html#solve_for_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp._policy_iteration.solve_for_value" title="Permalink to this definition">¶</a></dt>
+<dt id="pymdp.solvers.policy.solve_for_value">
+<code class="descclassname">pymdp.solvers.policy.</code><code class="descname">solve_for_value</code><span class="sig-paren">(</span><em>mdp</em>, <em>policy</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/solvers/policy.html#solve_for_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.solvers.policy.solve_for_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Solves the system
 $$
 (I - eta P(policy)) v = r(policy)
@@ -101,6 +104,18 @@ $$
 for the value function v.</p>
 </dd></dl>
 
+</div>
+<span class="target" id="module-pymdp.solvers.linear"></span><div class="section" id="pymdp-solvers-linear-programming">
+<h2>pymdp.solvers.linear_programming<a class="headerlink" href="#pymdp-solvers-linear-programming" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of linear programming solution to the infinite horizon
+problem.</p>
+<dl class="function">
+<dt id="pymdp.solvers.linear.linear_programming">
+<code class="descclassname">pymdp.solvers.linear.</code><code class="descname">linear_programming</code><span class="sig-paren">(</span><em>mdp: pymdp.mdp.MarkovDecisionProcess</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/solvers/linear.html#linear_programming"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.solvers.linear.linear_programming" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linear programming</p>
+</dd></dl>
+
+</div>
 </div>
 
 

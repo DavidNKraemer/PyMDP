@@ -34,6 +34,35 @@
             
   <div class="section" id="module-pymdp.mdp">
 <span id="markov-decision-processes"></span><h1>Markov Decision Processes<a class="headerlink" href="#module-pymdp.mdp" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pymdp-mdp">
+<h2>pymdp.mdp<a class="headerlink" href="#pymdp-mdp" title="Permalink to this headline">¶</a></h2>
+<p>Python representation of a Markov decision process, along with functions
+acting on the state space of an MDP.</p>
+<p>A <em>Markov decision process</em> (MDP) is formally a tuple</p>
+<div class="math notranslate nohighlight">
+\[(X, A, r, p, \beta)\]</div>
+<p>where</p>
+<ul class="simple">
+<li><span class="math notranslate nohighlight">\(X\)</span> is the <em>state space</em> of the MDP, usually a point set,</li>
+<li><span class="math notranslate nohighlight">\(A(x)\)</span> is, for each state <span class="math notranslate nohighlight">\(x \in X\)</span>, the <em>action set</em> of available actions at <span class="math notranslate nohighlight">\(x\)</span>,</li>
+<li><span class="math notranslate nohighlight">\(r(x,a)\)</span> is, for each state <span class="math notranslate nohighlight">\(x \in X\)</span> and <span class="math notranslate nohighlight">\(a \in A(x)\)</span>, the numerical <em>one-step reward function</em> at <span class="math notranslate nohighlight">\(x\)</span> with action <span class="math notranslate nohighlight">\(a\)</span>,</li>
+<li><span class="math notranslate nohighlight">\(p(y|x,a)\)</span> is, for states <span class="math notranslate nohighlight">\(x,y \in X\)</span> and <span class="math notranslate nohighlight">\(a \in A(x)\)</span>, the <em>transition probability</em> of the process arriving at the state <span class="math notranslate nohighlight">\(y\)</span> from the original state <span class="math notranslate nohighlight">\(x\)</span> by the action <span class="math notranslate nohighlight">\(a\)</span>,</li>
+<li><span class="math notranslate nohighlight">\(\beta\)</span> is a number between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> indicating the <em>discount factor</em>.</li>
+</ul>
+<dl class="class">
+<dt id="pymdp.mdp.MDPFunction">
+<em class="property">class </em><code class="descclassname">pymdp.mdp.</code><code class="descname">MDPFunction</code><a class="reference internal" href="../_modules/pymdp/mdp.html#MDPFunction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.mdp.MDPFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standardized user-facing object for representing functions on the state
+space of an MDP.</p>
+<p>Essentially, an <cite>MDPFunction</cite> is a <cite>dict</cite> whose items can be accessed via
+function calls. This is because many “functions” implemented throughout this
+library are actually <cite>dict</cite> objects <em>masquerading</em> as functions. Since they
+should be thought of as functions, this class provides the requisite
+interface to do so.</p>
+<p>We promise that any MDPFunction can access its values via <cite>__call__</cite>, but
+the internal implementation may evolve over time.</p>
+</dd></dl>
+
 <dl class="class">
 <dt id="pymdp.mdp.MarkovDecisionProcess">
 <em class="property">class </em><code class="descclassname">pymdp.mdp.</code><code class="descname">MarkovDecisionProcess</code><span class="sig-paren">(</span><em>states</em>, <em>actions</em>, <em>reward</em>, <em>transition</em>, <em>discount</em><span class="sig-paren">)</span><a class="headerlink" href="#pymdp.mdp.MarkovDecisionProcess" title="Permalink to this definition">¶</a></dt>
@@ -71,24 +100,56 @@
 
 <dl class="function">
 <dt id="pymdp.mdp.default_policy">
-<code class="descclassname">pymdp.mdp.</code><code class="descname">default_policy</code><span class="sig-paren">(</span><em>mdp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/mdp.html#default_policy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.mdp.default_policy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns an arbitrary policy, which assigns to each state some available
+<code class="descclassname">pymdp.mdp.</code><code class="descname">default_policy</code><span class="sig-paren">(</span><em>mdp</em>, <em>default=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/mdp.html#default_policy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.mdp.default_policy" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mdp</strong> (<a class="reference internal" href="#pymdp.mdp.MarkovDecisionProcess" title="pymdp.mdp.MarkovDecisionProcess"><em>MarkovDecisionProcess</em></a>) – A given Markov decision process object</li>
+<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The index of the default action for each state in the MDP (defaults to 0)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The policy defined by <span class="math notranslate nohighlight">\(\pi(x) = A(x)_i\)</span> where <cite>i</cite> is the default index supplied.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pymdp.mdp.MDPFunction" title="pymdp.mdp.MDPFunction">MDPFunction</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns an arbitrary policy, which assigns to each state some available
 action.</p>
-<p>Policy functions will be implemented as dictionaries. So if x is a state of
-the MDP, then policy[x] yields the action associated with the stationary
-policy for x.</p>
 <p>Note that the default policy requires there to be an available action at
-every state.</p>
+every state. (TODO: generalize this)</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pymdp.mdp.default_value">
-<code class="descclassname">pymdp.mdp.</code><code class="descname">default_value</code><span class="sig-paren">(</span><em>mdp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/mdp.html#default_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.mdp.default_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the “zero” value function, which assigns to each state the value 0.0</p>
-<p>Value functions will be implemented as dictionaries. So if x is a state of
-the MDP, then value[x] yields the value function at x.</p>
+<code class="descclassname">pymdp.mdp.</code><code class="descname">default_value</code><span class="sig-paren">(</span><em>mdp</em>, <em>default=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pymdp/mdp.html#default_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymdp.mdp.default_value" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mdp</strong> (<a class="reference internal" href="#pymdp.mdp.MarkovDecisionProcess" title="pymdp.mdp.MarkovDecisionProcess"><em>MarkovDecisionProcess</em></a>) – A given Markov decision process object</li>
+<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The default output of the value function at each point in the state space.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The constant value function <span class="math notranslate nohighlight">\(v : X \to \mathbb{R}\)</span> with the given <cite>v(x) = c</cite>, where <span class="math notranslate nohighlight">\(c\)</span> was supplied by <cite>default</cite>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pymdp.mdp.MDPFunction" title="pymdp.mdp.MDPFunction">MDPFunction</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns the “default” value function, which assigns to each state the value <cite>default</cite> (if unset, this defaults to 0.).</p>
 </dd></dl>
 
+</div>
 </div>
 
 

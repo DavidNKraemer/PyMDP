@@ -52,7 +52,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<span class="kn">from</span> <span class="nn">pymdp.mdp</span> <span class="k">import</span> <span class="n">default_value</span><span class="p">,</span> <span class="n">default_policy</span>
+<span class="kn">from</span> <span class="nn">pymdp.mdp</span> <span class="k">import</span> <span class="n">default_value</span><span class="p">,</span> <span class="n">default_policy</span><span class="p">,</span> <span class="n">MDPFunction</span>
 
 
 <div class="viewcode-block" id="bellman_step"><a class="viewcode-back" href="../../api/bellman.html#pymdp.bellman.bellman_step">[docs]</a><span class="k">def</span> <span class="nf">bellman_step</span><span class="p">(</span><span class="n">mdp</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
@@ -78,7 +78,7 @@
 <span class="sd">    .. math:: T_\beta v(x) = \max_{a \in A(x)} T^a_\beta v(x)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span>
-        <span class="p">(</span><span class="n">mdp</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="o">+</span> <span class="n">mdp</span><span class="o">.</span><span class="n">discount</span> <span class="o">*</span> <span class="n">value</span><span class="p">[</span><span class="n">y</span><span class="p">])</span> <span class="o">*</span> <span class="n">mdp</span><span class="o">.</span><span class="n">transition</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> \
+        <span class="p">(</span><span class="n">mdp</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="o">+</span> <span class="n">mdp</span><span class="o">.</span><span class="n">discount</span> <span class="o">*</span> <span class="n">value</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">*</span> <span class="n">mdp</span><span class="o">.</span><span class="n">transition</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> \
                     <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">mdp</span><span class="o">.</span><span class="n">states</span>
         <span class="p">)</span></div>
 
@@ -131,7 +131,20 @@
 <span class="sd">    :math:`\pi`. The function :math:`s_{x,a}(\pi)` is needed specifically for</span>
 <span class="sd">    policy iteration.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">bellman_step</span><span class="p">(</span><span class="n">mdp</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="o">-</span> <span class="n">value</span><span class="p">[</span><span class="n">state</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="n">bellman_step</span><span class="p">(</span><span class="n">mdp</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="o">-</span> <span class="n">value</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generate_policy_from"><a class="viewcode-back" href="../../api/bellman.html#pymdp.bellman.generate_policy_from">[docs]</a><span class="k">def</span> <span class="nf">generate_policy_from</span><span class="p">(</span><span class="n">mdp</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a policy corresponding to the given value function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MDPFunction</span><span class="p">({</span><span class="n">state</span><span class="p">:</span>
+            <span class="nb">next</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">bellman_step</span><span class="p">(</span><span class="n">mdp</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="n">value</span><span class="p">(</span><span class="n">state</span><span class="p">),</span>
+                    <span class="n">mdp</span><span class="o">.</span><span class="n">actions</span><span class="p">[</span><span class="n">state</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">)</span> <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">mdp</span><span class="o">.</span><span class="n">states</span><span class="p">})</span></div>
 </pre></div>
 
           </div>
