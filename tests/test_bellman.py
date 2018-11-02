@@ -9,7 +9,9 @@ from pymdp import bellman
 from pymdp.mdp import MarkovDecisionProcess, MDPFunction, default_value, default_policy
 
 
+import pytest
 import codecov
+
 
 simple_states = [0, 1]
 simple_actions = {0: [0], 1: [0]}
@@ -27,7 +29,7 @@ def complex_reward(state, action):
 def simple_transition(next_state, state, action):
     return 1. if (next_state == 1 - state) else 0.
 
-comtrans = {
+transitions = {
     (1, 0, 0): 0.3,
     (0, 0, 0): 0.7,
     (1, 1, 0): 0.6,
@@ -37,26 +39,67 @@ comtrans = {
     (1, 1, 1): 0.5,
     (0, 1, 1): 0.5
     }
+
+
 def complex_transition(next_state, state, action):
-    return comtrans[(next_state, state, action)]
+    """
+    Wrapper for the transition function dictionary
+    """
+    return transitions[(next_state, state, action)]
 
 
 simple_discount = 1.
-nil_mdp = MarkovDecisionProcess(simple_states, simple_actions, nil_reward,
-        simple_transition, simple_discount)
-unit_mdp = MarkovDecisionProcess(simple_states, simple_actions, unit_reward,
-        simple_transition, simple_discount)
-complex_mdp = MarkovDecisionProcess(simple_states, complex_actions,
-        complex_reward, complex_transition, simple_discount)
 
-zeros_value = default_value(nil_mdp, default=0.)
-ones_value = default_value(nil_mdp, default=1.)
+@pytest.fixture
+def nil_mdp():
+    """
+    Pytest fixture for an MDP of zero rewards and deterministic actions
+    """
+    return MarkovDecisionProcess(simple_states, simple_actions, nil_reward,
+                                 simple_transition, simple_discount)
 
-zeros_policy = default_policy(nil_mdp, default=0)
+@pytest.fixture
+def unit_mdp():
+    """
+    Pytest fixture for an MDP of unit rewards and deterministic actions
+    """
+    return MarkovDecisionProcess(simple_states, simple_actions, unit_reward,
+                                 simple_transition, simple_discount)
+
+@pytest.fixture
+def complex_mdp():
+    """
+    Pytest fixture for an MDP of variable rewards and stochastic actions
+    """
+    return MarkovDecisionProcess(simple_states, complex_actions, complex_reward,
+                                 complex_transition, simple_discount)
 
 
+@pytest.fixture
+def zeros_value():
+    """
+    Value function of all zeros
+    """
+    return MDPFunction({x: 0. for x in simple_states})
 
-def test_bellman_step():
+
+@pytest.fixture
+def ones_value():
+    """
+    Value function of all ones
+    """
+    return MDPFunction({x: 1. for x in simple_states})
+
+
+@pytest.fixture
+def zeros_policy():
+    """
+    Policy function of all zero-states
+    """
+    return MDPFunction({x: 0 for x in simple_states})
+
+
+def test_bellman_step(nil_mdp, unit_mdp, complex_mdp, zeros_value, ones_value):
     """
     Do a thing
     """
@@ -71,7 +114,7 @@ def test_bellman_step():
     assert isclose(bellman.bellman_step(complex_mdp, ones_value, 1, 0), 1.6)
     assert isclose(bellman.bellman_step(complex_mdp, ones_value, 1, 1), 2.5)
 
-def test_bellman_operator():
+def test_bellman_operator(nil_mdp, unit_mdp, complex_mdp, zeros_value, ones_value, zeros_policy):
     """
     Some tests
     """
@@ -92,8 +135,5 @@ def test_bellman_operator():
     assert policy == default_policy(complex_mdp, default=1)
 
 
-def test_bellman_difference():
+def test_bellman_difference(nil_mdp, unit_mdp, complex_mdp):
     pass
-
-    
-
